@@ -102,14 +102,10 @@ public class PersonalAreaTest {
         logger.info("Relocate switch successful");
 
         personalData.switchWorkFormat(true, WorkGrafData.REMOTELY);
-              logger.info("Add work format successful");
+        logger.info("Add work format successful");
 
         personalData.selectCommunicationMethod(InputFieldData.TELEGRAM, faker.name().name());
         logger.info("Add first communication method successful");
-
-//           personalData.clickAddCommunicationMethod();
-//          personalData.selectCommunicationMethod(InputFieldData.HABR, faker.name().name());
-
 
         personalData.selectGender("Мужской");
         logger.info("Add gender successful");
