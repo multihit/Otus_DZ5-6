@@ -13,10 +13,6 @@ public class Header extends AbsCommon {
 
     private String iconUserSelector = "img[src*='blue-owl']";
 
-    private String personalAreaElementDropSelector = "//*[contains(text(), \"Личный кабинет\")]";
-
-    private String learningButtonLocator = "//span[text()='Обучение']";
-
     public Header(WebDriver driver) {
         super(driver);
     }
