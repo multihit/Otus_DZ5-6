@@ -27,6 +27,10 @@ public class PersonalAreaTest {
 
     private WebDriver driver;
     protected Faker faker = new Faker();
+    String fakerName;
+    String fakerlName;
+    String fakerlastName;
+    String fakerlastNameLatin;
 
     @BeforeEach
     public void init() {
@@ -76,12 +80,18 @@ public class PersonalAreaTest {
         personalData.clearFieldsData(InputFieldData.LNAMELATIN);
         personalData.clearFieldsData(InputFieldData.BLOGNAME);
         personalData.clearFieldsData(InputFieldData.DATEOFBRTH);
+
         logger.info("Clear fields successful");
 
-        personalData.addNewDataFields(InputFieldData.FNAME, "Junior");
-        personalData.addNewDataFields(InputFieldData.FNAMELATIN, faker.name().name());
-        personalData.addNewDataFields(InputFieldData.LNAME, faker.name().name());
-        personalData.addNewDataFields(InputFieldData.LNAMELATIN, faker.name().name());
+        fakerName = String.valueOf(faker.name().firstName());
+        fakerlName = String.valueOf(faker.name().firstName());
+        fakerlastName = String.valueOf(faker.name().lastName());
+        fakerlastNameLatin = String.valueOf(faker.name().lastName());
+
+        personalData.addNewDataFields(InputFieldData.FNAME, fakerName);
+        personalData.addNewDataFields(InputFieldData.FNAMELATIN, fakerlName);
+        personalData.addNewDataFields(InputFieldData.LNAME, fakerlastName);
+        personalData.addNewDataFields(InputFieldData.LNAMELATIN, fakerlastNameLatin);
         personalData.addNewDataFields(InputFieldData.BLOGNAME, faker.name().name());
         personalData.addNewDataFields(InputFieldData.DATEOFBRTH,
                 faker.date().birthday().toInstant().atZone(ZoneId.
@@ -104,7 +114,7 @@ public class PersonalAreaTest {
         personalData.switchWorkFormat(true, WorkGrafData.REMOTELY);
         logger.info("Add work format successful");
 
-        personalData.selectCommunicationMethod(InputFieldData.TELEGRAM, faker.name().name());
+        personalData.selectCommunicationMethod(InputFieldData.TELEGRAM, faker.name().lastName());
         logger.info("Add first communication method successful");
 
         personalData.selectGender("Мужской");
@@ -115,43 +125,26 @@ public class PersonalAreaTest {
         logger.info("Add work information successful");
 
         personalData.clickSavePersonalData();
-    }
 
-    @Test
-    public void checkFieldsDataIsEmpty() {
-        new MainPage(driver).open("/");
 
-        logger.info("Waiting marker tel");
-        Header header = new Header(driver);
-        header.waitMarkerTelNumber();
-        header.waitSignInBtnIsPresent();
-        header.waitSignInBtnToBeClicable();
-
-        logger.info("Check status auth popup");
-        AuthPopups authPopups = new AuthPopups(driver);
         authPopups.popupShouldNotBeVisible();
-
+        new MainPage(driver).open("/");
+        logger.info("Waiting marker tel");
+        logger.info("Check status auth popup");
+        authPopups.popupShouldNotBeVisible();
         logger.info("Start of test logic. Login in LK");
-        header.clickSignInButton();
-        authPopups.popupShouldBeVisible();
-
-        authPopups.enterDataEmail();
-        authPopups.enterDataPassword();
-        authPopups.clickSignInBtnPopups();
-
         header.checkLogoUser();
         logger.info("Login in LK successful. Switch personal data page");
         header.clickPersonalArea();
 
-        PersonalDataPage personalData = new PersonalDataPage(driver);
-        personalData.assertFieldsData(InputFieldData.FNAME);
-        personalData.assertFieldsData(InputFieldData.FNAMELATIN);
-        personalData.assertFieldsData(InputFieldData.LNAME);
-        personalData.assertFieldsData(InputFieldData.LNAMELATIN);
-        personalData.assertFieldsData(InputFieldData.BLOGNAME);
-        personalData.assertFieldsData(InputFieldData.DATEOFBRTH);
-
-        personalData.checkFieldsDataIsNotEmpty();
-
+        personalData.assertFieldsDataName("fname", fakerName);
+        personalData.assertFieldsDatalName("fname_latin", fakerlName);
+        personalData.assertFieldsDatafakerlastName("lname", fakerlastName);
+        personalData.assertFieldsDatafakerlastNameLatin("lname_latin", fakerlastNameLatin);
+        personalData.assertFieldsData();
+        logger.info("comparison of personal data successfully");
     }
+
 }
+
+
