@@ -10,8 +10,8 @@ public enum InputFieldData {
     DATEOFBRTH("date_of_birth"),
     COMPANY("company"),
     POSITION("work"),
-    TELEGRAM("Тelegram"),
-    HABR("Habr");
+    TELEGRAM("Тelegram");
+
 
     private String name;
 

@@ -13,6 +13,7 @@ public class Header extends AbsCommon {
 
     private String iconUserSelector = "img[src*='blue-owl']";
 
+
     public Header(WebDriver driver) {
         super(driver);
     }
@@ -43,11 +44,9 @@ public class Header extends AbsCommon {
         waitTools.waitForCondition(ExpectedConditions
                 .presenceOfElementLocated(By.cssSelector(iconUserSelector)));
     }
-    public void clickPersonalArea() {
-        driver.findElement(By
-                        .xpath("//div[@class='sc-r03h0s-5 sc-1youhxc-2 bYKNcH imWQF sc-1og4wiw-0-Component fgPsmr']"))
-                .click();
-        driver.findElement(By.xpath("//div/a[@href='https://otus.ru/lk/biography/personal']")).click();
-    }
 
+    public void clickPersonalArea() {
+        driver.findElement(By.cssSelector(iconUserSelector)).click();
+        driver.findElement(By.xpath("//*[contains(@href, '/lk/biography/personal')]")).click();
+    }
 }

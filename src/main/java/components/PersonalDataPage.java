@@ -13,6 +13,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 public class PersonalDataPage extends AbsCommon {
+    String countries;
+    String city;
+    String english;
+
 
     public PersonalDataPage(WebDriver driver) {
         super(driver);
@@ -24,6 +28,7 @@ public class PersonalDataPage extends AbsCommon {
         }
     }
 
+
     public void addNewDataFields(InputFieldData inputFieldData, String data) {
         driver.findElement(By.cssSelector(String.format("input[name='%s']", inputFieldData.getName())))
                 .sendKeys(data);
@@ -32,6 +37,8 @@ public class PersonalDataPage extends AbsCommon {
     public void selectCountry(ICityData cityData) {
         WebElement russiaSelectElement = driver.findElement(By.cssSelector("[data-slave-selector='.js-lk-cv-dependent-slave-city']"));
         russiaSelectElement.click();
+
+        countries = cityData.getCountriesData().getNameCountry();
 
         WebElement countryListContainer = russiaSelectElement
                 .findElement(By.xpath(".//*[contains(@class, 'js-custom-select-options-container')]"));
@@ -49,6 +56,8 @@ public class PersonalDataPage extends AbsCommon {
         WebElement moscowSelectElement = driver.findElement(By.xpath("//*[contains(@class, 'js-lk-cv-dependent-slave-city')]"));
         moscowSelectElement.click();
 
+        city = cityData.getName();
+
         WebElement cityListContainer = moscowSelectElement
                 .findElement(By.xpath(".//*[contains(@class, 'js-custom-select-options-container')]"));
         waitTools.waitForCondition(ExpectedConditions.not(ExpectedConditions
@@ -63,6 +72,8 @@ public class PersonalDataPage extends AbsCommon {
         WebElement englishLevelSelectElement = driver.findElement(By
                 .xpath("//input[@name='english_level']/ancestor:: div[contains(@class, 'js-lk-cv-custom-select')]"));
         englishLevelSelectElement.click();
+
+        english = englishLevel.getName();
 
         WebElement levelListContainer = englishLevelSelectElement
                 .findElement(By.xpath(".//*[contains(@class, 'js-custom-select-options-container')]"));
@@ -91,8 +102,7 @@ public class PersonalDataPage extends AbsCommon {
 
             WebElement inputSelect = driver.findElement(By.cssSelector(String.format(selector, workGraf.getName())));
 
-//            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", inputSelect);
-//
+
             waitTools.waitForCondition(ExpectedConditions
                     .elementToBeClickable(By.cssSelector(String.format(selector, workGraf.getName()))));
 
@@ -102,9 +112,6 @@ public class PersonalDataPage extends AbsCommon {
         }
     }
 
-    public void clickAddCommunicationMethod() {
-        driver.findElement(By.cssSelector("button.js-lk-cv-custom-select-add")).click();
-    }
 
     public void selectCommunicationMethod(InputFieldData inputFieldData, String data) {
         WebElement commMethodSelectElement = driver.findElement(By
@@ -132,18 +139,38 @@ public class PersonalDataPage extends AbsCommon {
 
     }
 
-    public void assertFieldsData(InputFieldData inputFieldData) {
-        Assertions
-                .assertTrue(!driver.findElement
-                                (By.cssSelector(String.format("input[name='%s']", inputFieldData.getName())))
-                        .getAttribute("value").isEmpty());
+    public void assertFieldsDataName(String inputName, String fakerName) {
+        String fakerValue = driver.findElement
+                (By.cssSelector(String.format("input[name='%s']", inputName))).getAttribute("value");
+
+        Assertions.assertEquals(fakerValue, fakerName);
     }
 
-    public void checkFieldsDataIsNotEmpty() {
-        Assertions.assertTrue(!driver.findElement(By.cssSelector(".js-lk-cv-dependent-master > label:nth-child(1) > div:nth-child(2)")).getText().isEmpty());
-        Assertions.assertTrue(!driver.findElement(By.cssSelector(".js-lk-cv-dependent-slave-city > label:nth-child(1) > div:nth-child(2)")).getText().isEmpty());
-        Assertions.assertTrue(!driver.findElement(By.xpath("//input[@name='english_level']/ancestor:: div[contains(@class, 'js-lk-cv-custom-select')]")).getText().isEmpty());
+    public void assertFieldsDatalName(String inputName, String fakerlName) {
+        String fakerValue = driver.findElement
+                (By.cssSelector(String.format("input[name='%s']", inputName))).getAttribute("value");
 
+        Assertions.assertEquals(fakerValue, fakerlName);
     }
 
+    public void assertFieldsDatafakerlastName(String inputName, String fakerlastName) {
+        String fakerValue = driver.findElement
+                (By.cssSelector(String.format("input[name='%s']", inputName))).getAttribute("value");
+
+        Assertions.assertEquals(fakerValue, fakerlastName);
+    }
+
+    public void assertFieldsDatafakerlastNameLatin(String inputName, String fakerlastNameLatin) {
+        String fakerValue = driver.findElement
+                (By.cssSelector(String.format("input[name='%s']", inputName))).getAttribute("value");
+
+        Assertions.assertEquals(fakerValue, fakerlastNameLatin);
+    }
+
+
+    public void assertFieldsData() {
+        Assertions.assertEquals(countries, driver.findElement(By.cssSelector(".js-lk-cv-dependent-master > label:nth-child(1) > div:nth-child(2)")).getText());
+        Assertions.assertEquals(city, driver.findElement(By.cssSelector(".js-lk-cv-dependent-slave-city > label:nth-child(1) > div:nth-child(2)")).getText());
+        Assertions.assertEquals(english, driver.findElement(By.xpath("//input[@name='english_level']/ancestor:: div[contains(@class, 'js-lk-cv-custom-select')]")).getText());
+    }
 }
