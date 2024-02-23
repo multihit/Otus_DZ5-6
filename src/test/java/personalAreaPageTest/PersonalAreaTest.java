@@ -138,9 +138,9 @@ public class PersonalAreaTest {
         header.clickPersonalArea();
 
         personalData.assertFieldsDataName("fname", fakerName);
-        personalData.assertFieldsDatalName("fname_latin", fakerlName);
-        personalData.assertFieldsDatafakerlastName("lname", fakerlastName);
-        personalData.assertFieldsDatafakerlastNameLatin("lname_latin", fakerlastNameLatin);
+        personalData.assertFieldsDataName("fname_latin", fakerlName);
+        personalData.assertFieldsDataName("lname", fakerlastName);
+        personalData.assertFieldsDataName("lname_latin", fakerlastNameLatin);
         personalData.assertFieldsData();
         logger.info("comparison of personal data successfully");
     }

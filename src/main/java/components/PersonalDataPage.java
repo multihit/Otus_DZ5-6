@@ -139,34 +139,12 @@ public class PersonalDataPage extends AbsCommon {
 
     }
 
-    public void assertFieldsDataName(String inputName, String fakerName) {
+    public void assertFieldsDataName(String inputName, String fakerNames) {
         String fakerValue = driver.findElement
                 (By.cssSelector(String.format("input[name='%s']", inputName))).getAttribute("value");
 
-        Assertions.assertEquals(fakerValue, fakerName);
+        Assertions.assertEquals(fakerValue, fakerNames);
     }
-
-    public void assertFieldsDatalName(String inputName, String fakerlName) {
-        String fakerValue = driver.findElement
-                (By.cssSelector(String.format("input[name='%s']", inputName))).getAttribute("value");
-
-        Assertions.assertEquals(fakerValue, fakerlName);
-    }
-
-    public void assertFieldsDatafakerlastName(String inputName, String fakerlastName) {
-        String fakerValue = driver.findElement
-                (By.cssSelector(String.format("input[name='%s']", inputName))).getAttribute("value");
-
-        Assertions.assertEquals(fakerValue, fakerlastName);
-    }
-
-    public void assertFieldsDatafakerlastNameLatin(String inputName, String fakerlastNameLatin) {
-        String fakerValue = driver.findElement
-                (By.cssSelector(String.format("input[name='%s']", inputName))).getAttribute("value");
-
-        Assertions.assertEquals(fakerValue, fakerlastNameLatin);
-    }
-
 
     public void assertFieldsData() {
         Assertions.assertEquals(countries, driver.findElement(By.cssSelector(".js-lk-cv-dependent-master > label:nth-child(1) > div:nth-child(2)")).getText());
